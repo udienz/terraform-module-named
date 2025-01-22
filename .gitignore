@@ -321,8 +321,6 @@ tags
 
 ### Project template
 
-wowportal/media/
-
 .pytest_cache/
 
 # sqlite
@@ -341,3 +339,17 @@ staticfiles/*
 static/*
 config/settings/local.py
 *.sqlite
+
+.terraform/
+*.tfstate
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.tfvars
+*.tfvars.json
+.terraformrc
+terraform.rc
+*.lock.hcl
+*.tfstate
+*.tfstate.*
