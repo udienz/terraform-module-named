@@ -32,4 +32,15 @@ jobs:
         id: fmt
         run: |
           terraform fmt -check
-        continue-on-error: true
+      
+      - name: Terraform init
+        id: init
+        run: |
+          cd example
+          terraform init -input=false
+      
+      - name: Terraform plan
+        id: plan
+        run: |
+          cd example
+          terraform plan -input=false
