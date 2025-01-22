@@ -2,14 +2,10 @@ locals {
   naming = (var.name == var.zone
     ? null
   : var.name)
-  # indexing = (
-  #  dns_records.name == ""
-  #  ? "root_${dns_records.zone}"
-  #  : dns_records.name
 }
-# If the record are A
+
+# If the record is A
 resource "dns_a_record_set" "a" {
-  #for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "A" }
 
   count     = var.type == "A" ? 1 : 0
   name      = local.naming
@@ -18,8 +14,8 @@ resource "dns_a_record_set" "a" {
   addresses = var.records
 }
 
+# CNAME record
 resource "dns_cname_record" "cname" {
-  # for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "CNAME" }
   count = var.type == "CNAME" ? 1 : 0
   name  = local.naming
   zone  = var.zone
@@ -27,18 +23,17 @@ resource "dns_cname_record" "cname" {
   cname = var.records
 }
 
+# TXT record
 resource "dns_txt_record_set" "txt" {
-  # for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "TXT" }
   count = var.type == "TXT" ? 1 : 0
-  # name  = var.name
-  name = local.naming
-  zone = var.zone
-  ttl  = var.ttl
-  txt  = var.records
+  name  = local.naming
+  zone  = var.zone
+  ttl   = var.ttl
+  txt   = var.records
 }
 
+# AAAA record for ipv6
 resource "dns_aaaa_record_set" "aaa" {
-  # for_each  = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "AAAA" }
   count     = var.type == "AAAA" ? 1 : 0
   name      = local.naming
   zone      = var.zone
@@ -46,8 +41,8 @@ resource "dns_aaaa_record_set" "aaa" {
   addresses = var.records
 }
 
+# NS record
 resource "dns_ns_record_set" "ns" {
-  #for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "NS" }
   count       = var.type == "NS" ? 1 : 0
   name        = local.naming
   zone        = var.zone
@@ -55,8 +50,8 @@ resource "dns_ns_record_set" "ns" {
   nameservers = var.records
 }
 
+# PTR record
 resource "dns_ptr_record" "ptr" {
-  #for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "PTR" }
   count = var.type == "PTR" ? 1 : 0
   name  = local.naming
   zone  = var.zone
@@ -64,8 +59,8 @@ resource "dns_ptr_record" "ptr" {
   ptr   = var.records
 }
 
+# MX record
 resource "dns_mx_record_set" "mx" {
-  #for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "MX" }
   count = var.type == "MX" ? 1 : 0
   name  = local.naming
   zone  = var.zone
@@ -80,14 +75,12 @@ resource "dns_mx_record_set" "mx" {
   }
 }
 
+# SRV record
 resource "dns_srv_record_set" "srv" {
-  #for_each = { for key, value in var.dns_records : value.dns_records.name => value if value.type == "SRV" }
-
   count = var.type == "SRV" ? 1 : 0
-
-  name = local.naming
-  zone = var.zone
-  ttl  = var.ttl
+  name  = local.naming
+  zone  = var.zone
+  ttl   = var.ttl
   dynamic "srv" {
     for_each = var.records
     content {

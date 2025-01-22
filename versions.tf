@@ -7,7 +7,7 @@ terraform {
       version = ">= 3.63"
     }
     dns = {
-      source = "hashicorp/dns"
+      source  = "hashicorp/dns"
       version = ">= 3.0.0"
     }
   }
