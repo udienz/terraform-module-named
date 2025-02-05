@@ -25,7 +25,7 @@ variable "bind_dns_key_algorithm" {
 }
 
 module "named_dns" {
-  source   = "../"
+  source = "../"
   # use below if you connected to internet
   # source = "github.com/udienz/terraform-module-named"
   for_each = { for dns_records in var.dns_records : "${dns_records.zone}_${dns_records.name}_${dns_records.type}" => dns_records }
