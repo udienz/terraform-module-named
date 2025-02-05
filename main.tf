@@ -20,7 +20,7 @@ resource "dns_cname_record" "cname" {
   name  = local.naming
   zone  = var.zone
   ttl   = var.ttl
-  cname = var.records
+  cname = join("",var.records)
 }
 
 # TXT record
